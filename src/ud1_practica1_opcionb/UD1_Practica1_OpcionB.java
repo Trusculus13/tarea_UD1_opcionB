@@ -16,13 +16,19 @@ public class UD1_Practica1_OpcionB {
             Process process = processBuilder.start();
 
             // Leer la salida del proceso con cierre automático de reader
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            System.out.println("Información de las tarjetas de red:");
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                System.out.println("Información de las tarjetas de red:");
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
             }
-        } catch (Exception e) {
+
+            // Esperar a que el proceso termine
+            int exitCode = process.waitFor();
+            System.out.println("\nProceso terminado con código de salida: " + exitCode);
+
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

@@ -1,5 +1,9 @@
 package ud1_practica1_opcionb;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
 public class UD1_Practica1_OpcionB {
 
     public static void main(String[] args) {
@@ -11,7 +15,13 @@ public class UD1_Practica1_OpcionB {
             // Iniciar el proceso
             Process process = processBuilder.start();
 
-            System.out.println("Proceso iniciado");
+            // Leer la salida del proceso con cierre automático de reader
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            System.out.println("Información de las tarjetas de red:");
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
